@@ -1,0 +1,22 @@
+<h2>Admin Panel</h2>
+<div id="p"></div>
+
+<script>
+fetch("https://YOUR-RENDER.onrender.com/admin/submissions")
+.then(r=>r.json())
+.then(d=>{
+ document.getElementById("p").innerHTML =
+ d.map(s=>`
+  <img src="${s.screenshot}" width="200"/>
+  <button onclick="approve(${s.id})">Approve</button>
+ `).join("");
+});
+
+function approve(id){
+ fetch("https://YOUR-RENDER.onrender.com/admin/approve",{
+  method:"POST",
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({id})
+ }).then(()=>location.reload());
+}
+</script>
